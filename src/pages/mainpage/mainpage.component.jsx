@@ -17,7 +17,9 @@ import AddIcon from "@material-ui/icons/Add";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ProtectedRoute from "../../services/protectedRoute.service";
+import AccountPage from "../accountPage/accountPage.component";
 
+import "./mainpage.style.scss";
 // import { connect } from "react-redux";
 const style = theme => ({
   root: {
@@ -34,10 +36,15 @@ const style = theme => ({
   }
 });
 class MainPage extends Component {
+  state = {
+    processPageStatus: false
+  };
   componentDidMount() {
     this.product();
   }
-
+  toggleProcessPageStatus = () => {
+    this.setState({ processPageStatus: !this.state.processPageStatus });
+  };
   product = async () => {
     try {
       const resp = await getFirebase("/products");
@@ -64,14 +71,21 @@ class MainPage extends Component {
         <Switch>
           <ProtectedRoute
             path="/console/process-cart"
-            component={ProcessPage}
+            component={AccountPage}
           />
           <ProtectedRoute path="/console/add-items" component={AddItemsPage} />
-          <ProtectedRoute path="/console/cart" component={CartPage} />
+          <ProtectedRoute
+            path="/console/cart"
+            component={CartPage}
+            toggleProcessPageStatus={this.toggleProcessPageStatus}
+          />
           <Redirect exact={true} from="/" to="/console/cart" />
-          {/* <Route path="/not-found" component={NotFound} /> */}
           <Redirect to="/not-found" />
         </Switch>
+        <ProcessPage
+          toggleProcessPageStatus={this.toggleProcessPageStatus}
+          hidden={this.state.processPageStatus}
+        ></ProcessPage>
         <BottomNavigation
           value={this.props.location.pathname}
           classes={{ root: classes.bottomNav }}
@@ -104,11 +118,11 @@ class MainPage extends Component {
 }
 const mainStyle = withStyles(style)(MainPage);
 
-const mapStateToProps = state => {
-  return {
-    products: state.products
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     products: state.products
+//   };
+// };
 const mapDispatchToProps = dispatch => {
   return {
     setProducts: products => dispatch(setProducts(products)),
@@ -117,6 +131,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  // mapStateToProps,
+  null,
   mapDispatchToProps
 )(mainStyle);

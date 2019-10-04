@@ -7,3 +7,7 @@ export const setCurrentUser = userInfo => {
 export const setAnonymous = state => {
   return { type: UserActionTypes.SET_ANONYMOUS, payload: state };
 };
+
+export const setDelivery = info => {
+  return { type: UserActionTypes.SET_DELIVERY_INFO, payload: info };
+};

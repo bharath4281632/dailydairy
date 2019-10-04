@@ -26,10 +26,16 @@ const cartReducer = (state = INIT_STATE, action) => {
       };
     }
     case cartActionTypes.ADD_STOCK: {
-      let index = state.items.indexOf(action.payload);
-      let total = state.total + action.payload.rate;
+      let total = state.total;
       let items = [...state.items];
-      items[index] = { ...items[index], purchase: action.payload.purchase + 1 };
+      if (action.payload.purchase <= action.payload.stock) {
+        let index = state.items.indexOf(action.payload);
+        total = state.total + action.payload.rate;
+        items[index] = {
+          ...items[index],
+          purchase: action.payload.purchase + 1
+        };
+      }
       return {
         ...state,
         items,
@@ -37,10 +43,16 @@ const cartReducer = (state = INIT_STATE, action) => {
       };
     }
     case cartActionTypes.REMOVE_STOCK: {
-      let index = state.items.indexOf(action.payload);
-      let total = state.total - action.payload.rate;
+      let total = state.total;
       let items = [...state.items];
-      items[index] = { ...items[index], purchase: action.payload.purchase - 1 };
+      if (action.payload.purchase >= 0) {
+        let index = state.items.indexOf(action.payload);
+        total = state.total - action.payload.rate;
+        items[index] = {
+          ...items[index],
+          purchase: action.payload.purchase - 1
+        };
+      }
       return {
         ...state,
         items,

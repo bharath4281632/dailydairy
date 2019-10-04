@@ -10,6 +10,10 @@ import {
   addStock,
   removeStock
 } from "../../redux/cart/cart.actions";
+import {
+  cartItemsSelector,
+  totolSelector
+} from "../../redux/cart/cart.selector";
 // import { SET_CART } from "../../utils/actions/const";
 const style = theme => ({
   root: {
@@ -53,8 +57,6 @@ export class CartPage extends Component {
 
   render() {
     const { classes, cartItems } = this.props;
-    // const { cartItems } = this.props;
-    // console.log(cartItems);
     return (
       <div className={classes.root}>
         <Paper className={classes.paper}>
@@ -85,7 +87,12 @@ export class CartPage extends Component {
             </Box>
           </Box>
         </Paper>
-        <Fab color="primary" aria-label="add" className={classes.fab}>
+        <Fab
+          color="primary"
+          aria-label="add"
+          className={classes.fab}
+          onClick={this.props.toggleProcessPageStatus}
+        >
           <ShippingIcon />
         </Fab>
       </div>
@@ -94,8 +101,8 @@ export class CartPage extends Component {
 }
 const mapStateToProps = state => {
   return {
-    cartItems: state.cart.items,
-    total: state.cart.total
+    cartItems: cartItemsSelector(state),
+    total: totolSelector(state)
   };
 };
 const mapDispatchToProps = dispatch => {

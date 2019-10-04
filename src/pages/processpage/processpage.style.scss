@@ -1,0 +1,18 @@
+#process-paper {
+  position: relative;
+  padding: 10px;
+  margin: 13px;
+  height: 93vh;
+}
+#processpage-component {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.267);
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   padding: 12px;
+  //   margin: 10px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}

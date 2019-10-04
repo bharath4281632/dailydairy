@@ -10,39 +10,40 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import { withStyles } from "@material-ui/core/styles";
+// import { withStyles } from "@material-ui/core/styles";
 
 import "./loginpage.style.scss";
 import {
-  loginWithGmail,
+  // loginWithGmail,
   currentUser,
   loginAnonymously
 } from "../../firebase/auth.firebase";
-import { setCurrentUser } from "../../redux/user/user.actions";
+import { setCurrentUser, setAnonymous } from "../../redux/user/user.actions";
 import { checkAnonymously } from "../../services/userAuth.service";
-const styles = {
-  label: {
-    textTransform: "none",
-    width: 190,
-    background: "#2680EB",
-    "&:hover": {
-      background: "#2680EB"
-    }
-  }
-};
+import GoogleLogin from "react-google-login";
+// const styles = {
+//   label: {
+//     textTransform: "none",
+//     width: 190,
+//     background: "#2680EB",
+//     "&:hover": {
+//       background: "#2680EB"
+//     }
+//   }
+// };
 
 class Login extends Component {
   componentDidMount() {}
-  login = async () => {
+  login = async response => {
     try {
-      const resp = await loginWithGmail();
-      const userToken = await resp.user.getIdToken();
+      const userToken = response.tokenId;
       localStorage.setItem("token", userToken);
       const userInfo = currentUser();
       this.props.setCurrentUser(userInfo);
       this.props.setAnonymous(checkAnonymously(userInfo));
+      this.props.history.replace("/console/cart");
     } catch (ex) {
-      console.log(ex.message);
+      alert(ex.message);
     }
   };
   anonymously = async () => {
@@ -57,7 +58,7 @@ class Login extends Component {
     }
   };
   googleLogin = () => {
-    this.login().then(() => this.props.history.replace("/console/cart"));
+    this.login();
     // this.props.loginWithGmail(this.props);
   };
   anonymousLogin = () => {
@@ -66,7 +67,7 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <div id="home">
         <Typography variant="h1" component="h2" className="title-home">
@@ -76,7 +77,7 @@ class Login extends Component {
           </div>
         </Typography>
         <div className="login-area-home">
-          <Button
+          {/* <Button
             color="primary"
             variant="contained"
             classes={{
@@ -86,7 +87,14 @@ class Login extends Component {
             onClick={this.googleLogin}
           >
             Login with Google
-          </Button>
+          </Button> */}
+          <GoogleLogin
+            clientId="821757378934-tnne7b30u5l21v40s2fp3gnjargirkt8.apps.googleusercontent.com"
+            buttonText="Login With Google"
+            onSuccess={this.login}
+            onFailure={() => console.log("login Fails")}
+            cookiePolicy={"single_host_origin"}
+          />
           <div className="or-home">
             <Divider></Divider>
             <Typography variant="body1">Or</Typography>
@@ -105,14 +113,13 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginWithGmail: props => dispatch({ type: "LOGIN_WITH_GMAIL", props }),
-    loginAnonymously: props => dispatch({ type: "LOGIN_ANONYMOUSLY", props }),
-    setCurrentUser: userInfo => dispatch(setCurrentUser(userInfo))
+    setCurrentUser: userInfo => dispatch(setCurrentUser(userInfo)),
+    setAnonymous: status => dispatch(setAnonymous(status))
   };
 };
-const loginStyle = withStyles(styles)(Login);
+// const loginStyle = withStyles(styles)(Login);
 export default connect(
   null,
   mapDispatchToProps
-)(loginStyle);
+)(Login);
 // export default connect()loginStyle;

@@ -10,11 +10,10 @@ export default function ProtectedRoute({
 }) {
   return (
     <Route
-      {...rest}
       path={path}
       render={props => {
         if (!currentUser()) return <Redirect to="/login" />;
-        return Component ? <Component {...props} /> : render(props);
+        return Component ? <Component {...props} {...rest} /> : render(props);
       }}
     />
   );

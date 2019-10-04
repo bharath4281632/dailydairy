@@ -21,10 +21,8 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    // console.log(isMobileDevice());
     this.setState({ isMobile: isMobileDevice() });
     let userInfo = currentUser() || null;
-    // if (!userInfo) return;
     this.props.setCurrentUser(userInfo);
     this.props.setAnonymous(checkAnonymously(userInfo));
   }

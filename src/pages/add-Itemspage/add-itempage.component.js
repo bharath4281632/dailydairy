@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import CustomCard from "../../components/CustomCard/customCard.component";
 import { connect } from "react-redux";
+import { milkSelector } from "../../redux/products/products.selector";
+import { cartItemsSelector } from "../../redux/cart/cart.selector";
 export class AddItemPage extends Component {
   render() {
-    const { products, cartItems } = this.props;
+    const { milk, cartItems } = this.props;
     return (
       <div
         style={{
@@ -12,8 +14,8 @@ export class AddItemPage extends Component {
           overflowY: "scroll"
         }}
       >
-        {products.milk
-          ? products.milk.map(item => (
+        {milk
+          ? milk.map(item => (
               <CustomCard
                 group={item}
                 key={item.name}
@@ -27,8 +29,8 @@ export class AddItemPage extends Component {
 }
 const mapStateToProps = state => {
   return {
-    products: state.products,
-    cartItems: state.cart.items
+    milk: milkSelector(state),
+    cartItems: cartItemsSelector(state)
   };
 };
 

@@ -19,6 +19,7 @@ import CollapseCard from "../collapseCard/collapseCard.component";
 // import { ADD_TO_CART, REMOVE_FROM_CART } from "../../utils/actions/const";
 import { isValeInArray } from "../../services/pre-processor.service";
 import { addCartItem, removeCartitem } from "../../redux/cart/cart.actions";
+import { cartItemsSelector } from "../../redux/cart/cart.selector";
 // import moduleName from 'module'
 const style = theme => ({
   card: {
@@ -148,7 +149,7 @@ export class CustomCard extends Component {
 }
 const mapStateToProps = state => {
   return {
-    cartItems: state.cart.items
+    cartItems: cartItemsSelector(state)
   };
 };
 const mapDispatchToProps = dispatch => {
