@@ -17,3 +17,7 @@ export function isMobileDevice() {
     navigator.userAgent.indexOf("IEMobile") !== -1
   );
 }
+
+export function capitalizeFist(word) {
+  return word.slice(0, 1).toUpperCase() + word.slice(1);
+}

@@ -37,7 +37,7 @@ const style = theme => ({
 });
 class MainPage extends Component {
   state = {
-    processPageStatus: false
+    processPageStatus: true
   };
   componentDidMount() {
     this.product();

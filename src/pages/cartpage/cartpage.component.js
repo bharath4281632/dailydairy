@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Paper, Box, Grid, Typography, Button, Fab } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import ShippingIcon from "@material-ui/icons/LocalShipping";
 
@@ -43,11 +44,6 @@ const style = theme => ({
   }
 });
 export class CartPage extends Component {
-  // state = { cartItems: [] };
-  // componentDidMount() {
-  //   let cartItems = this.props.cartItems;
-  //   this.setState({ cartItems });
-  // }
   handleAddStock = item => {
     this.props.addStock(item);
   };
@@ -81,7 +77,12 @@ export class CartPage extends Component {
             ))}
 
             <Box className={classes.addButton}>
-              <Button variant="text" color="primary">
+              <Button
+                variant="text"
+                color="primary"
+                component={Link}
+                to={"/console/add-items"}
+              >
                 Add Product
               </Button>
             </Box>

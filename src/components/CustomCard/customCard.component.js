@@ -17,7 +17,10 @@ import Grid from "@material-ui/core/Grid";
 import ColorBox from "../colorBox/colorBox.component";
 import CollapseCard from "../collapseCard/collapseCard.component";
 // import { ADD_TO_CART, REMOVE_FROM_CART } from "../../utils/actions/const";
-import { isValeInArray } from "../../services/pre-processor.service";
+import {
+  isValeInArray,
+  capitalizeFist
+} from "../../services/pre-processor.service";
 import { addCartItem, removeCartitem } from "../../redux/cart/cart.actions";
 import { cartItemsSelector } from "../../redux/cart/cart.selector";
 // import moduleName from 'module'
@@ -94,7 +97,7 @@ export class CustomCard extends Component {
               </Grid>
               <Grid item xs={6}>
                 <CardContent className={cardContent}>
-                  <Typography variant="h5">{name}</Typography>
+                  <Typography variant="h5">{capitalizeFist(name)}</Typography>
                   <Typography
                     variant="caption"
                     className={subTitle}

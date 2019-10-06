@@ -10,6 +10,7 @@ import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCart from "@material-ui/icons/RemoveShoppingCart";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
+import { capitalizeFist } from "../../services/pre-processor.service";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,7 +43,7 @@ function CollapseCard({ product, handleAdditem, cartStatus }) {
         </Grid>
         <Grid item xs={8}>
           <Typography component="h2" variant="subtitle1">
-            {name}
+            {capitalizeFist(name)}
           </Typography>
           <Typography
             component="h2"

@@ -9,6 +9,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
 import BackSpaceIcon from "@material-ui/icons/ArrowBack";
 import { deliveryInfoSelector } from "../../redux/user/user.selector";
 import { setDelivery } from "../../redux/user/user.actions";
@@ -80,7 +81,7 @@ const ProcessPage = ({
   };
   console.log(delivery);
   return (
-    <div hidden={hidden} id="processpage-component">
+    <Box hidden={hidden} id="processpage-component">
       <Paper id="process-paper">
         <Button
           variant="text"
@@ -138,7 +139,7 @@ const ProcessPage = ({
           </div>
         </form>
       </Paper>
-    </div>
+    </Box>
   );
 };
 const mapStateToProps = state => {
