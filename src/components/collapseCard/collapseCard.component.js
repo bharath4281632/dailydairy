@@ -39,7 +39,7 @@ function CollapseCard({ product, handleAdditem, cartStatus }) {
     <div className={classes.root}>
       <Grid container justify="space-between" alignItems="center">
         <Grid item xs={2}>
-          <ColorBox color={color} size={40}></ColorBox>
+          <ColorBox color={color} size={31}></ColorBox>
         </Grid>
         <Grid item xs={8}>
           <Typography component="h2" variant="subtitle1">

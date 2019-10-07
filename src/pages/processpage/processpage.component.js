@@ -15,6 +15,7 @@ import { deliveryInfoSelector } from "../../redux/user/user.selector";
 import { setDelivery } from "../../redux/user/user.actions";
 import { schema, inputField } from "./processpage.util";
 import "./processpage.style.scss";
+import { totolSelector } from "../../redux/cart/cart.selector";
 const useStyle = makeStyles(theme => ({
   textField: {
     paddingBottom: 10
@@ -39,7 +40,8 @@ const ProcessPage = ({
   toggleProcessPageStatus,
   hidden,
   delivery,
-  addDelivery
+  addDelivery,
+  total
 }) => {
   const classes = useStyle();
 
@@ -127,6 +129,9 @@ const ProcessPage = ({
               label="Cash on delivery"
             />
           </FormGroup>
+          <div className="payment-amount">
+            Total Amount to be payed <span>{total} Rs</span>
+          </div>
           <div className={classes.submitButton}>
             <Button
               variant="contained"
@@ -144,7 +149,8 @@ const ProcessPage = ({
 };
 const mapStateToProps = state => {
   return {
-    delivery: deliveryInfoSelector(state)
+    delivery: deliveryInfoSelector(state),
+    total: totolSelector(state)
   };
 };
 const mapDispatchToProps = dispatch => {

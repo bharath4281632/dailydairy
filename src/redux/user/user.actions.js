@@ -4,8 +4,11 @@ export const setCurrentUser = userInfo => {
   return { type: UserActionTypes.SET_CURRENT_USER, payload: userInfo };
 };
 
-export const setAnonymous = state => {
-  return { type: UserActionTypes.SET_ANONYMOUS, payload: state };
+export const setAnonymous = status => {
+  return { type: UserActionTypes.SET_ANONYMOUS, payload: status };
+};
+export const setAdmin = status => {
+  return { type: UserActionTypes.SET_ADMIN, payload: status };
 };
 
 export const setDelivery = info => {

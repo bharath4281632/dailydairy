@@ -4,3 +4,13 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+#add-new-card {
+  background: rgba(103, 99, 99, 0.92);
+  margin: 9px;
+  // padding: 10px;
+  .icons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+}

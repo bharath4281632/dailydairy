@@ -45,7 +45,7 @@ const cartReducer = (state = INIT_STATE, action) => {
     case cartActionTypes.REMOVE_STOCK: {
       let total = state.total;
       let items = [...state.items];
-      if (action.payload.purchase >= 0) {
+      if (action.payload.purchase > 0) {
         let index = state.items.indexOf(action.payload);
         total = state.total - action.payload.rate;
         items[index] = {

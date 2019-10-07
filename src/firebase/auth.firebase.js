@@ -10,6 +10,11 @@ export function loginWithGmail() {
 export function loginAnonymously() {
   return rxauth().signInAnonymously();
 }
+export function logoutUser() {
+  return rxauth()
+    .signOut()
+    .then(() => localStorage.removeItem("token"));
+}
 
 export function currentUser() {
   let unix_epoch = Math.floor(new Date().getTime() / 1000.0);

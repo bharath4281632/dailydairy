@@ -4,7 +4,8 @@ import { UserActionTypes } from "./user.types";
 const INIT_STATE = {
   currentUser: null,
   isAnonymous: true,
-  deliveryInfo: {}
+  deliveryInfo: {},
+  isAdmin: false
 };
 
 const userReducer = (state = INIT_STATE, action) => {
@@ -15,6 +16,8 @@ const userReducer = (state = INIT_STATE, action) => {
       return { ...state, isAnonymous: action.payload };
     case UserActionTypes.SET_DELIVERY_INFO:
       return { ...state, deliveryInfo: action.payload };
+    case UserActionTypes.SET_ADMIN:
+      return { ...state, isAdmin: action.payload };
     default:
       return state;
   }

@@ -1,0 +1,30 @@
+#account-paper {
+  display: block;
+  width: 100%;
+  margin: 12px;
+  margin-bottom: 70px;
+  .header {
+    margin-top: 15px;
+    size: 20px;
+  }
+  .profile-avatar {
+    width: 128px;
+    height: 128px;
+    // display: block;
+    margin: 10px auto;
+  }
+  .profile-anon {
+    width: 128px;
+    height: 128px;
+    margin: 10px auto;
+    background-color: purple;
+  }
+  .profile-name {
+    color: rgba(0, 0, 0, 0.8);
+    text-align: center;
+  }
+  .profile-email {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.64);
+  }
+}

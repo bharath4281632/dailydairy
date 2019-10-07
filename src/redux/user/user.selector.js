@@ -6,3 +6,12 @@ export const deliveryInfoSelector = createSelector(
   [userSelector],
   user => user.deliveryInfo
 );
+
+export const currentUser = createSelector(
+  [userSelector],
+  user => user.currentUser
+);
+export const isAdminSelector = createSelector(
+  [userSelector],
+  user => user.isAdmin
+);

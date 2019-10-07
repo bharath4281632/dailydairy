@@ -10,40 +10,77 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-// import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 import "./loginpage.style.scss";
 import {
-  // loginWithGmail,
+  loginWithGmail,
   currentUser,
   loginAnonymously
 } from "../../firebase/auth.firebase";
-import { setCurrentUser, setAnonymous } from "../../redux/user/user.actions";
+import {
+  setCurrentUser,
+  setAnonymous,
+  setAdmin
+} from "../../redux/user/user.actions";
 import { checkAnonymously } from "../../services/userAuth.service";
-import GoogleLogin from "react-google-login";
-// const styles = {
-//   label: {
-//     textTransform: "none",
-//     width: 190,
-//     background: "#2680EB",
-//     "&:hover": {
-//       background: "#2680EB"
-//     }
-//   }
-// };
+// import { create } from "handlebars";
+import { getFirebase, setFirebase } from "../../firebase/db.firebase";
+// import GoogleLogin from "react-google-login";
+// import { urlGoogle } from "../../googleapis/auth.services";
+const styles = {
+  label: {
+    textTransform: "none",
+    width: 190,
+    background: "#2680EB",
+    "&:hover": {
+      background: "#2680EB"
+    }
+  }
+};
 
 class Login extends Component {
   componentDidMount() {}
-  login = async response => {
+  login = async () => {
     try {
-      const userToken = response.tokenId;
+      const response = await loginWithGmail();
+      const {
+        uid,
+        displayName,
+        email,
+        emailVerified,
+        phoneNumber,
+        isAnonymous,
+        photoURL
+      } = response.user;
+      const userToken = await response.user.getIdToken();
       localStorage.setItem("token", userToken);
+      // console.log(uid);
+      const userExistance = await getFirebase("/users/" + uid);
+      console.log(userExistance.val());
+      let isAdmin;
+      if (!userExistance.val()) {
+        isAdmin = false;
+        setFirebase("/users/" + uid, {
+          displayName,
+          email,
+          emailVerified,
+          phoneNumber,
+          isAnonymous,
+          photoURL,
+          isAdmin: false
+        });
+      } else {
+        isAdmin = userExistance.val().isAdmin || false;
+        this.props.adminStatus(isAdmin);
+      }
+      console.log(isAdmin, "isAdmin status");
       const userInfo = currentUser();
       this.props.setCurrentUser(userInfo);
       this.props.setAnonymous(checkAnonymously(userInfo));
       this.props.history.replace("/console/cart");
     } catch (ex) {
-      alert(ex.message);
+      console.log(ex.message);
     }
   };
   anonymously = async () => {
@@ -67,7 +104,7 @@ class Login extends Component {
   };
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     return (
       <div id="home">
         <Typography variant="h1" component="h2" className="title-home">
@@ -77,7 +114,7 @@ class Login extends Component {
           </div>
         </Typography>
         <div className="login-area-home">
-          {/* <Button
+          <Button
             color="primary"
             variant="contained"
             classes={{
@@ -85,16 +122,17 @@ class Login extends Component {
               // colorInherit: classes.label
             }}
             onClick={this.googleLogin}
+            // href={urlGoogle()}
           >
             Login with Google
-          </Button> */}
-          <GoogleLogin
+          </Button>
+          {/* <GoogleLogin
             clientId="821757378934-tnne7b30u5l21v40s2fp3gnjargirkt8.apps.googleusercontent.com"
             buttonText="Login With Google"
             onSuccess={this.login}
             onFailure={() => console.log("login Fails")}
             cookiePolicy={"single_host_origin"}
-          />
+          /> */}
           <div className="or-home">
             <Divider></Divider>
             <Typography variant="body1">Or</Typography>
@@ -114,12 +152,13 @@ class Login extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     setCurrentUser: userInfo => dispatch(setCurrentUser(userInfo)),
-    setAnonymous: status => dispatch(setAnonymous(status))
+    setAnonymous: status => dispatch(setAnonymous(status)),
+    adminStatus: status => dispatch(setAdmin(status))
   };
 };
-// const loginStyle = withStyles(styles)(Login);
+const loginStyle = withStyles(styles)(Login);
 export default connect(
   null,
   mapDispatchToProps
-)(Login);
+)(loginStyle);
 // export default connect()loginStyle;

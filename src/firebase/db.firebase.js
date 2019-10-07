@@ -5,3 +5,9 @@ export function getFirebase(path = "/") {
     .ref(path)
     .once("value");
 }
+
+export function setFirebase(path = "/", data) {
+  return rxDatabase()
+    .ref(path)
+    .set(data);
+}
